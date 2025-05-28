@@ -54,7 +54,6 @@ io.on('connection', (socket) => {
     console.log('user disconnected');
   });
 
-  // Add your real-time events here if needed
 });
 
 // Routes
