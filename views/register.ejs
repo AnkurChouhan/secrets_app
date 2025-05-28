@@ -21,7 +21,9 @@
             <div class="mb-3">
               <label for="email" class="form-label">Email Address</label>
               <input type="email" class="form-control" id="email" name="email" required>
-              <div class="invalid-feedback" id="emailFeedback" style="display:none;">Please enter a valid email.</div>
+              <div class="invalid-feedback" id="emailFeedback" style="display:none;">
+                Please enter a valid email address (including '@' and domain).
+              </div>
             </div>
 
             <div class="mb-3">
@@ -76,37 +78,32 @@
   const confirmFeedback = document.getElementById('confirmFeedback');
   const showPasswordCheckbox = document.getElementById('showPassword');
 
-  // Toggle visibility for both password fields
+  // Toggle password visibility
   showPasswordCheckbox.addEventListener('change', () => {
     const type = showPasswordCheckbox.checked ? 'text' : 'password';
     password.type = type;
     confirmPassword.type = type;
   });
 
-  // Improved email regex:
-  // - local part: alphanumeric, dots, underscores, percent, plus, minus allowed
-  // - domain part: letters, numbers, hyphens, dots
-  // - must have '@' and a domain with at least one dot
-  const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  // Strict email regex (requires '@' and domain)
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  form.addEventListener('submit', function (e) {
+  form.addEventListener('submit', (e) => {
     let valid = true;
 
-    // Trim email input
-    const emailValue = email.value.trim();
+    const emailVal = email.value.trim();
 
-    // Email validation
-    if (!emailPattern.test(emailValue)) {
+    // Check email validity with regex
+    if (!emailPattern.test(emailVal)) {
       email.classList.add('is-invalid');
       emailFeedback.style.display = 'block';
-      emailFeedback.textContent = "Please enter a valid email address.";
       valid = false;
     } else {
       email.classList.remove('is-invalid');
       emailFeedback.style.display = 'none';
     }
 
-    // Password validation
+    // Password pattern check
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
     if (!passwordPattern.test(password.value)) {
       password.classList.add('is-invalid');
@@ -115,7 +112,7 @@
       password.classList.remove('is-invalid');
     }
 
-    // Confirm password match validation
+    // Confirm password check
     if (password.value !== confirmPassword.value) {
       confirmPassword.classList.add('is-invalid');
       confirmFeedback.style.display = 'block';
@@ -126,7 +123,7 @@
     }
 
     if (!valid) {
-      e.preventDefault(); // Prevent form submission
+      e.preventDefault(); // stop form submission
     }
   });
 </script>
