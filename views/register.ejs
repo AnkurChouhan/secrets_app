@@ -1,0 +1,111 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-body">
+          <h3 class="card-title text-center mb-4">Create Account</h3>
+
+          <% if (error) { %>
+            <div class="alert alert-danger text-center"><%= error %></div>
+          <% } %>
+
+          <form action="/register" method="POST" id="registerForm" novalidate>
+            <div class="mb-3">
+              <label for="name" class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="name" name="name" required>
+              <div class="invalid-feedback">Name is required.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email Address</label>
+              <input type="email" class="form-control" id="email" name="email" required>
+              <div class="invalid-feedback">Please enter a valid email.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input 
+                type="password" 
+                class="form-control" 
+                id="password" 
+                name="password" 
+                required 
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$"
+              >
+              <div class="form-text">
+                Password must include uppercase, lowercase, number, and be at least 6 characters.
+              </div>
+              <div class="invalid-feedback">Please follow the password format.</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input 
+                type="password" 
+                class="form-control" 
+                id="confirmPassword" 
+                name="confirmPassword" 
+                required
+              >
+              <div class="invalid-feedback" id="confirmFeedback">Passwords must match.</div>
+            </div>
+
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="showPassword">
+              <label class="form-check-label" for="showPassword">Show Password</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+          </form>
+
+          <p class="mt-3 text-center">Already have an account? <a href="/login">Login</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const form = document.getElementById('registerForm');
+  const password = document.getElementById('password');
+  const confirmPassword = document.getElementById('confirmPassword');
+  const feedback = document.getElementById('confirmFeedback');
+  const showPasswordCheckbox = document.getElementById('showPassword');
+
+  // Toggle visibility for both password fields
+  showPasswordCheckbox.addEventListener('change', function () {
+    const type = this.checked ? 'text' : 'password';
+    password.type = type;
+    confirmPassword.type = type;
+  });
+
+  // Validation on submit
+  form.addEventListener('submit', function (e) {
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
+    let valid = true;
+
+    if (!passwordPattern.test(password.value)) {
+      password.classList.add('is-invalid');
+      valid = false;
+    } else {
+      password.classList.remove('is-invalid');
+    }
+
+    if (password.value !== confirmPassword.value) {
+      confirmPassword.classList.add('is-invalid');
+      feedback.style.display = 'block';
+      valid = false;
+    } else {
+      confirmPassword.classList.remove('is-invalid');
+      feedback.style.display = 'none';
+    }
+
+    if (!valid) {
+      e.preventDefault(); // Prevent submission if validation fails
+    }
+  });
+</script>
+
+<%- include('partials/footer') %>

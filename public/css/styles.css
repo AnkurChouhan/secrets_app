@@ -1,0 +1,224 @@
+/* Reset base styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f8f9fa;
+  color: #343a40;
+  min-height: 100vh;
+}
+
+/* Container center */
+.container {
+  max-width: 960px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+/* Jumbotron Styling */
+.jumbotron {
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: white;
+  padding: 5rem 2rem;
+  border-radius: 0;
+  text-align: center;
+}
+
+.jumbotron h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.jumbotron i {
+  margin-bottom: 1rem;
+}
+
+/* Lead paragraph text */
+.lead, .secrets-text {
+  font-size: 1.25rem;
+  margin: 1rem 0 2rem;
+}
+
+/* Buttons */
+.btn-light, .btn-dark, .btn-primary, .btn-success {
+  margin: 0.5rem 0.25rem;
+  min-width: 160px;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+}
+
+.btn-light {
+  background-color: #f8f9fa;
+  color: #343a40;
+}
+.btn-light:hover {
+  background-color: #e9ecef;
+  color: #000;
+}
+
+.btn-dark {
+  background-color: #343a40;
+  color: #fff;
+}
+.btn-dark:hover {
+  background-color: #1c1c1c;
+}
+
+.btn-primary {
+  background-color: #2575fc;
+  color: #fff;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: #fff;
+}
+.btn-success:hover {
+  background-color: #218838;
+}
+
+/* Forms */
+form input[type="text"],
+form input[type="email"],
+form input[type="password"],
+form textarea,
+form select {
+  width: 100%;
+  border-radius: 30px;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid #ced4da;
+  font-size: 1rem;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: #6a11cb;
+  box-shadow: 0 0 0 0.2rem rgba(106, 17, 203, 0.25);
+  outline: none;
+}
+
+form label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Textarea minimum height */
+textarea {
+  min-height: 120px;
+}
+
+/* Form button */
+form button {
+  margin-top: 1.5rem;
+  border-radius: 30px;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+}
+
+/* Card */
+.card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgb(0 0 0 / 0.1);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  text-align: left;
+}
+
+/* Card Title */
+.card-title {
+  font-weight: 700;
+  font-size: 1.75rem;
+  margin-bottom: 1.5rem;
+  color: #343a40;
+  text-align: center;
+}
+
+/* Alerts */
+.alert {
+  padding: 1rem 1.5rem;
+  border-radius: 15px;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #842029;
+  border: 1px solid #f5c2c7;
+}
+
+.alert-success {
+  background-color: #d1e7dd;
+  color: #0f5132;
+  border: 1px solid #badbcc;
+}
+
+/* Form validation feedback */
+.invalid-feedback {
+  font-size: 0.875rem;
+  color: #dc3545;
+  margin-top: 0.25rem;
+  display: none;
+}
+
+/* Show feedback when invalid */
+.was-validated input:invalid + .invalid-feedback,
+.was-validated textarea:invalid + .invalid-feedback,
+.was-validated select:invalid + .invalid-feedback {
+  display: block;
+}
+
+/* Form checkboxes */
+.form-check {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.form-check-input {
+  margin-right: 0.5rem;
+}
+
+/* Flex Center Helper (if needed) */
+.full-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .jumbotron h1 {
+    font-size: 2.5rem;
+  }
+  .btn-light, .btn-dark, .btn-primary, .btn-success {
+    min-width: 100%;
+    margin: 0.5rem 0;
+  }
+  .container {
+    padding: 0 1rem;
+  }
+}

@@ -1,0 +1,66 @@
+<%- include('partials/header') %>
+
+<div class="container mt-5">
+  <h2>Submit Your Secret</h2>
+
+  <% if (error) { %>
+    <div class="alert alert-danger"><%= error %></div>
+  <% } else if (success) { %>
+    <div class="alert alert-success"><%= success %></div>
+  <% } %>
+
+  <form action="/submit" method="POST" novalidate>
+    <div class="mb-3">
+      <label for="secret" class="form-label">Your Secret</label>
+      <textarea 
+        class="form-control" 
+        id="secret" 
+        name="secret" 
+        rows="5" 
+        required 
+        minlength="1" 
+        maxlength="1000"
+      ><%= typeof secret !== 'undefined' ? secret : '' %></textarea>
+      <div class="invalid-feedback">Please enter your secret (max 1000 chars).</div>
+    </div>
+
+    <div class="mb-3">
+      <label for="category" class="form-label">Category</label>
+      <select class="form-select" id="category" name="category" required>
+        <option value="" disabled <%= !category ? 'selected' : '' %>>Select category</option>
+        <option value="confession" <%= category === 'confession' ? 'selected' : '' %>>Confession</option>
+        <option value="question" <%= category === 'question' ? 'selected' : '' %>>Question</option>
+        <option value="advice" <%= category === 'advice' ? 'selected' : '' %>>Advice</option>
+        <option value="other" <%= category === 'other' ? 'selected' : '' %>>Other</option>
+      </select>
+      <div class="invalid-feedback">Please select a category.</div>
+    </div>
+
+    <div class="mb-3 form-check">
+      <input 
+        type="checkbox" 
+        class="form-check-input" 
+        id="isPublic" 
+        name="isPublic" 
+        value="true"
+        <%= isPublic ? 'checked' : '' %>
+      >
+      <label class="form-check-label" for="isPublic">Make this secret public</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+<script>
+  const form = document.querySelector('form');
+  form.addEventListener('submit', function(event) {
+    if (!form.checkValidity()) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    form.classList.add('was-validated');
+  });
+</script>
+
+<%- include('partials/footer') %>
