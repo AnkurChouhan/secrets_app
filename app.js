@@ -1,5 +1,5 @@
 const express = require('express');
-const http = require('http');          // Needed for Socket.IO server
+const http = require('http');          // Socket.IO server
 const { Server } = require('socket.io');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
