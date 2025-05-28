@@ -46,7 +46,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// Socket.IO setup (basic example)
+// Socket.IO setup
 io.on('connection', (socket) => {
   console.log('a user connected via Socket.IO');
 
