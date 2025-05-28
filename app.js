@@ -82,9 +82,10 @@ app.get('/logout', (req, res) => {
   res.redirect('/login');
 });
 
-// Register Route
+// Register route
 app.post('/register', async (req, res) => {
   const { name, email, password } = req.body;
+
   if (!name || !email || !password) {
     return res.render('register', { error: 'Please fill all fields' });
   }
@@ -97,13 +98,8 @@ app.post('/register', async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
-    const newUser = new User({
-      name,
-      email: email.toLowerCase(),
-      password: hashedPassword,
-    });
+    await new User({ name, email: email.toLowerCase(), password: hashedPassword }).save();
 
-    await newUser.save();
     res.redirect('/login');
   } catch (err) {
     console.error(err);
