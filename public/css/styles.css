@@ -200,7 +200,7 @@ form button {
   margin-right: 0.5rem;
 }
 
-/* Flex Center Helper (if needed) */
+/* Flex Center Helper */
 .full-center {
   display: flex;
   justify-content: center;
