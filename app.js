@@ -1,12 +1,17 @@
 const express = require('express');
+const http = require('http');          // Needed for Socket.IO server
+const { Server } = require('socket.io');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 const User = require('./models/User');
-const Submission = require('./models/Submission'); // <- Added Submission model import
+const Submission = require('./models/Submission');
 
 const app = express();
+const server = http.createServer(app);  // Create HTTP server
+const io = new Server(server);           // Initialize Socket.IO with server
+
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -15,7 +20,7 @@ app.use(express.static('public'));
 // --- Config ---
 const MONGO_URI = 'mongodb+srv://ankurchouhanofficial:Txc1xnhu5ktZFnWz@cluster777.i70wgbx.mongodb.net/secretsDB?retryWrites=true&w=majority';
 const JWT_SECRET = '2a6e5dcdd43faceb9a1a745080cf8e0149c2667010c226a53cce57fbd8f3bfacfc26e130174a41ea318b80867aea3cd38cf6bf12f880c0da0013d5954c742967';
-const JWT_EXPIRATION = ''; 
+const JWT_EXPIRATION = '';
 
 // Connect to MongoDB
 mongoose.connect(MONGO_URI, {
@@ -41,6 +46,17 @@ function authenticateToken(req, res, next) {
   });
 }
 
+// Socket.IO setup (basic example)
+io.on('connection', (socket) => {
+  console.log('a user connected via Socket.IO');
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+
+  // Add your real-time events here if needed
+});
+
 // Routes
 app.get('/', (req, res) => {
   res.render('home');
@@ -61,7 +77,7 @@ app.get('/secrets', authenticateToken, (req, res) => {
 app.get('/logout', (req, res) => {
   res.clearCookie('token', {
     httpOnly: true,
-    secure: false, // set to true if using HTTPS in production
+    secure: false, // set true if HTTPS production
     sameSite: 'Strict'
   });
   res.redirect('/login');
@@ -122,7 +138,7 @@ app.post('/login', async (req, res) => {
 
     res.cookie('token', token, {
       httpOnly: true,
-      secure: false, // true if production HTTPS
+      secure: false, // true if HTTPS production
       sameSite: 'Strict',
     });
 
@@ -136,7 +152,6 @@ app.post('/login', async (req, res) => {
 // Show submit form (protected route)
 app.get('/submit', authenticateToken, async (req, res) => {
   try {
-    // Fetch user secrets to show on the page
     const userSecrets = await Submission.find({ userId: req.user.id }).sort({ createdAt: -1 });
     res.render('submit', { error: null, success: null, userSecrets, secret: '', category: '', isPublic: false });
   } catch (err) {
@@ -182,7 +197,6 @@ app.post('/submit', authenticateToken, async (req, res) => {
 
     await newSubmission.save();
 
-    // Reload user secrets after successful save
     const userSecrets = await Submission.find({ userId: req.user.id }).sort({ createdAt: -1 });
 
     res.render('submit', { 
@@ -207,7 +221,8 @@ app.post('/submit', authenticateToken, async (req, res) => {
   }
 });
 
-// Start server
-app.listen(10000, () => {
-  console.log('Server running on port 5000');
+// Listen on Render port or fallback 5000 locally
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
