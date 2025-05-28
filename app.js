@@ -9,7 +9,7 @@ const User = require('./models/User');
 const Submission = require('./models/Submission');
 
 const app = express();
-const server = http.createServer(app);  // Create HTTP server
+const server = http.createServer(app);  // HTTP server
 const io = new Server(server);           // Initialize Socket.IO with server
 
 app.set('view engine', 'ejs');
