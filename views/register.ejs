@@ -21,7 +21,7 @@
             <div class="mb-3">
               <label for="email" class="form-label">Email Address</label>
               <input type="email" class="form-control" id="email" name="email" required>
-              <div class="invalid-feedback">Please enter a valid email.</div>
+              <div class="invalid-feedback" id="emailFeedback">Please enter a valid email.</div>
             </div>
 
             <div class="mb-3">
@@ -69,9 +69,11 @@
 
 <script>
   const form = document.getElementById('registerForm');
+  const email = document.getElementById('email');
+  const emailFeedback = document.getElementById('emailFeedback');
   const password = document.getElementById('password');
   const confirmPassword = document.getElementById('confirmPassword');
-  const feedback = document.getElementById('confirmFeedback');
+  const confirmFeedback = document.getElementById('confirmFeedback');
   const showPasswordCheckbox = document.getElementById('showPassword');
 
   // Toggle visibility for both password fields
@@ -81,11 +83,25 @@
     confirmPassword.type = type;
   });
 
+  // Email regex for validation (basic standard)
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   // Validation on submit
   form.addEventListener('submit', function (e) {
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
     let valid = true;
 
+    // Email validation
+    if (!emailPattern.test(email.value)) {
+      email.classList.add('is-invalid');
+      emailFeedback.style.display = 'block';
+      valid = false;
+    } else {
+      email.classList.remove('is-invalid');
+      emailFeedback.style.display = 'none';
+    }
+
+    // Password validation (pattern enforced by HTML, but re-check here)
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
     if (!passwordPattern.test(password.value)) {
       password.classList.add('is-invalid');
       valid = false;
@@ -93,13 +109,14 @@
       password.classList.remove('is-invalid');
     }
 
+    // Confirm password match validation
     if (password.value !== confirmPassword.value) {
       confirmPassword.classList.add('is-invalid');
-      feedback.style.display = 'block';
+      confirmFeedback.style.display = 'block';
       valid = false;
     } else {
       confirmPassword.classList.remove('is-invalid');
-      feedback.style.display = 'none';
+      confirmFeedback.style.display = 'none';
     }
 
     if (!valid) {
