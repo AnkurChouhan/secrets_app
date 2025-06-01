@@ -17,12 +17,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static('public'));
 
-// --- Config ---
+// --- Config Ankur Chouhan Mongo Atlas ---
 const MONGO_URI = 'mongodb+srv://ankurchouhanofficial:Txc1xnhu5ktZFnWz@cluster777.i70wgbx.mongodb.net/secretsDB?retryWrites=true&w=majority';
 const JWT_SECRET = '2a6e5dcdd43faceb9a1a745080cf8e0149c2667010c226a53cce57fbd8f3bfacfc26e130174a41ea318b80867aea3cd38cf6bf12f880c0da0013d5954c742967';
 const JWT_EXPIRATION = '';
 
-// Connect to MongoDB
+// MongoDB Connection
 mongoose.connect(MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
