@@ -64,7 +64,7 @@
   const password = document.getElementById('password');
   const showPasswordCheckbox = document.getElementById('showPassword');
 
-  // Toggle password visibility
+  // Toggle password
   showPasswordCheckbox.addEventListener('change', () => {
     const type = showPasswordCheckbox.checked ? 'text' : 'password';
     password.type = type;
@@ -78,7 +78,7 @@
 
     const emailVal = email.value.trim();
 
-    // Check email validity
+    // Email validity
     if (!emailPattern.test(emailVal)) {
       email.classList.add('is-invalid');
       emailFeedback.style.display = 'block';
@@ -88,7 +88,7 @@
       emailFeedback.style.display = 'none';
     }
 
-    // Password pattern check
+    // Password Pattern
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
     if (!passwordPattern.test(password.value)) {
       password.classList.add('is-invalid');
