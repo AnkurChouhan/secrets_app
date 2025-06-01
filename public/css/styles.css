@@ -1,4 +1,4 @@
-/* Reset base styles */
+/* Main Body Theme */
 body, html {
   margin: 0;
   padding: 0;
@@ -16,7 +16,7 @@ body, html {
   text-align: center;
 }
 
-/* Jumbotron Styling */
+/* Bootstrap for the Jumbotron Styling */
 .jumbotron {
   background: linear-gradient(to right, #6a11cb, #2575fc);
   color: white;
@@ -209,7 +209,7 @@ form button {
   text-align: center;
 }
 
-/* Responsive Design */
+/* Responsive Design with Media Quries for the device compatiblity */
 @media (max-width: 768px) {
   .jumbotron h1 {
     font-size: 2.5rem;
